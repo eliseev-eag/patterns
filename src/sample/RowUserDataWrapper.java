@@ -14,9 +14,22 @@ public class RowUserDataWrapper {
     };
 
     public RowUserDataWrapper(RowUserData row){
-        for(String cell: row.getUserData()){
-            properties.add(new SimpleStringProperty(cell));
+        for(int i = 0;i<row.size();i++){
+            int finalI = i;
+            SimpleStringProperty simpleStringProperty = new SimpleStringProperty(row.getCellValue(finalI)){
+                @Override
+                public void set(String v){
+                    super.set(v);
+                    row.setCellValue(finalI,v);
+                }
+            };
+            properties.add(simpleStringProperty);
+
         }
+
+        //for(String cell: row.getUserData()){
+          //  properties.add(new SimpleStringProperty(cell));
+       // }
     }
 
     public StringProperty getProperty(int i){

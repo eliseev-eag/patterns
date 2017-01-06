@@ -21,10 +21,6 @@ public class TableUserData {
         return headerMap;
     }
 
-    public void setUserData(List<RowUserData> userData) {
-        this.userData = userData;
-    }
-
     public List<RowUserData> getUserData() {
         return userData;
     }

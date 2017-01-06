@@ -26,14 +26,13 @@ public class Controller {
 
 
     private void OpenFileDialog() throws IOException {
-        FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
-        fileChooser.setTitle("Open Document");//Заголовок диалога
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Document");
         FileChooser.ExtensionFilter extFilter =
                 new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");//Расширение
         fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showOpenDialog(button.getScene().getWindow());//Указываем текущую сцену CodeNote.mainStage
+        File file = fileChooser.showOpenDialog(button.getScene().getWindow());
         if (file != null) {
-            System.out.println("Процесс открытия файла");
             InputDataConverter converter = new CSVDataConverter();
             TableUserData userData =  converter.Convert(file);
             CreateTableViewColumns(userData);
@@ -41,6 +40,8 @@ public class Controller {
     }
 
     private void CreateTableViewColumns(TableUserData userData){
+        tableView.getColumns().clear();
+        tableView.editableProperty().set(true);
         TableUserDataWrapper tableUserDataWrapper = new TableUserDataWrapper(userData);
 
         Map<String, Integer> headerMap = tableUserDataWrapper.getHeaderMap();
@@ -48,7 +49,7 @@ public class Controller {
         for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
             String key = entry.getKey();
             TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(key);
-            column.setCellValueFactory(param -> new ReadOnlyObjectWrapper(param.getValue().getProperty(entry.getValue()).get()));
+            column.setCellValueFactory(param -> (param.getValue().getProperty(entry.getValue())));
             tableView.getColumns().addAll(column);
         }
         tableView.setItems(tableUserDataWrapper.getUserData());

@@ -27,7 +27,4 @@ public class TableUserDataWrapper {
         return headerMap;
     }
 
-    public RowUserDataWrapper get(int index){
-        return userData.get(index);
-    }
 }

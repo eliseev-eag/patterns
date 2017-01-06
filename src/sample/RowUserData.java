@@ -16,7 +16,15 @@ public class RowUserData {
         return userData;
     }
 
-    public void setUserData(List<String> userData) {
-        this.userData = userData;
+    public String getCellValue(int index){
+        return userData.get(index);
+    }
+
+    public void setCellValue(int index,String value){
+        userData.set(index,value);
+    }
+
+    public int size(){
+        return userData.size();
     }
 }
