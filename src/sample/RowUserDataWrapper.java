@@ -24,12 +24,7 @@ public class RowUserDataWrapper {
                 }
             };
             properties.add(simpleStringProperty);
-
         }
-
-        //for(String cell: row.getUserData()){
-          //  properties.add(new SimpleStringProperty(cell));
-       // }
     }
 
     public StringProperty getProperty(int i){
