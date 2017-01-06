@@ -33,7 +33,6 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(button.getScene().getWindow());//Указываем текущую сцену CodeNote.mainStage
         if (file != null) {
-//Open
             System.out.println("Процесс открытия файла");
             InputDataConverter converter = new CSVDataConverter();
             TableUserData userData =  converter.Convert(file);
@@ -43,97 +42,18 @@ public class Controller {
 
     private void CreateTableViewColumns(TableUserData userData){
         TableUserDataWrapper tableUserDataWrapper = new TableUserDataWrapper(userData);
-/*
-        TableView<RowUserDataWrapper> tableView = new TableView<>();
 
         Map<String, Integer> headerMap = tableUserDataWrapper.getHeaderMap();
 
         for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
             String key = entry.getKey();
             TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(key);
-            //column.setCellValueFactory(param -> new ReadOnlyObjectWrapper(param.getValue().getProperty(entry.getValue())));
+            column.setCellValueFactory(param -> new ReadOnlyObjectWrapper(param.getValue().getProperty(entry.getValue()).get()));
             tableView.getColumns().addAll(column);
-        }
-        tableView.setItems(tableUserDataWrapper.getUserData());*/
-
-        final Set<String> strings = tableUserDataWrapper.getHeaderMap().keySet();
-        for(String header : strings) {
-            TableColumn tableColumn = new TableColumn(header);
-
-            tableView.getColumns().add(tableColumn);
         }
         tableView.setItems(tableUserDataWrapper.getUserData());
     }
-/*
-    private void Test(){
-        TableView tableView;
-        String headers[] = null;
-        String items[] = null;
 
-        Employee ee;
-        List<String> columns = new ArrayList<String>();
-        List<String> rows = new ArrayList<String>();
-        ObservableList<ObservableList> csvData = FXCollections.observableArrayList();
-
-            try {
-                int columnIndex = 0;
-                TableColumn[] tableColumns;
-                File f = new File("C:\\Users\\admin\\Desktop\\Project\\shipforecast\\Data\\Recieve\\ShipId-1432530905282-1.csv");
-                if (f.exists() && !f.isDirectory()) {
-                    FileReader fin = new FileReader(f);
-                    BufferedReader in = new BufferedReader(fin);
-                    String l;
-                    int i = 0;
-
-                    while ((l = in.readLine()) != null) {
-
-                        if (i < 1) {
-                            headers = l.split(",");
-
-                            for (String w : headers) {
-                                columns.add(w);
-
-                            }
-                            for (int ii = 0; ii < columns.size(); ii++) {
-                                final int finalIdx = ii;
-                                TableColumn<ObservableList<String>, String> column = new TableColumn<>(
-                                        columns.get(ii)
-                                );
-
-                                // column.setText("hghjghjg");
-                                column.setCellValueFactory(param ->
-                                        new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx))
-                                );
-
-                             /*System.out.println(new ReadOnlyObjectWrapper<>(param.getValue().get(finalIdx)));*/
-
-                              //  tableView.getColumns().addAll(column);
-                           // }
-
-                            //tableView.getColumns().addAll(tableColumns);
-                    /*    } else {
-                            ObservableList<String> row = FXCollections.observableArrayList();
-                            row.clear();
-                            items = l.split(",");
-                            for (String item : items) {
-                                System.out.println(item);
-                                row.add(item);
-                            }
-                            csvData.add(row);
-                        }
-                        i++;
-
-                        tableView.getItems().add(csvData);
-
-                    }
-                } else {
-                    System.out.println("File Not Found");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }*/
 }
 
 
