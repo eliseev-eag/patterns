@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints minWidth="102.0" prefWidth="102.0" />
+      <ColumnConstraints minWidth="253.0" prefWidth="446.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="40.0" prefHeight="40.0" />
+      <RowConstraints minHeight="405.0" prefHeight="660.0" />
+   </rowConstraints>
+   <children>
+      <Button fx:id="button" mnemonicParsing="false" onMouseClicked="#onMouseClicked" prefHeight="165.0" prefWidth="208.0" text="Button" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <TableView fx:id="tableView" editable="true" prefHeight="689.0" prefWidth="498.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+</GridPane>
