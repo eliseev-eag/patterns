@@ -41,8 +41,8 @@ public class Controller {
     }
 
     private void addParsedInfo(TableUserData userData) {
-        tableUserDataWrapper = new TableUserDataWrapper(userData);
-        tableView.getItems().addAll(tableUserDataWrapper.getUserData());
+        tableUserDataWrapper.addData(userData);
+
     }
 
     private File OpenFileDialog() throws IOException {

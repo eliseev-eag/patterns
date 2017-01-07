@@ -27,4 +27,16 @@ public class TableUserDataWrapper {
         return headerMap;
     }
 
+    public void addData(TableUserData newData){
+        Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
+        //Менять ключи, чобы они шли в том же порядке, что и в первом файле
+        if(newDataHeaderMap.keySet().containsAll(this.headerMap.keySet()))
+        {
+            for(int i = 0;i<newData.getUserData().size();i++){
+                userData.add(new RowUserDataWrapper(newData.getUserData().get(i)));
+            }
+            System.out.println("Complete!");
+        }
+
+    }
 }
