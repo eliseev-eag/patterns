@@ -23,6 +23,12 @@ public class RowUserDataWrapper {
                     super.set(v);
                     row.setCellValue(finalI,v);
                 }
+
+                @Override
+                public void setValue(String value){
+                    super.set(value);
+                    row.setCellValue(finalI,value);
+                }
             };
             properties.add(simpleStringProperty);
         }

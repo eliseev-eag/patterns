@@ -16,8 +16,6 @@ public class TableUserDataWrapper {
     private final Map<String, Integer> headerMap;
     private TableUserData nativeTable;
 
-    //Хранить необернутый tableUserData
-
     public TableUserDataWrapper(TableUserData data){
         nativeTable = data;
         for (RowUserData row : data.getUserData()) {
@@ -37,15 +35,12 @@ public class TableUserDataWrapper {
     public void addData(TableUserData newData){
         Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
         if(newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())){
-            List<Integer> indexMappedProperty = new ArrayList<>(Collections.nCopies(headerMap.size(),0));
-            for(Map.Entry<String,Integer> srcHeader: headerMap.entrySet())
-                indexMappedProperty.set(srcHeader.getValue(),newDataHeaderMap.get(srcHeader.getKey()));
-            for(int i = 0;i<newData.getUserData().size();i++){
-                RowUserData newRow = new RowUserData(newData.getUserData().get(i).getUserData(), indexMappedProperty);
-                nativeTable.add(newRow);
-                observableTable.add(new RowUserDataWrapper(newRow));
-            }
+                int sizeBeforeAddingRows = nativeTable.size();
+                nativeTable.addData(newData);
+                int sizeAfterAddingRows = nativeTable.size();
+                for (int index = sizeBeforeAddingRows; index < sizeAfterAddingRows; index++)
+                observableTable.add(new RowUserDataWrapper(nativeTable.get(index)));
         }
-
     }
+
 }

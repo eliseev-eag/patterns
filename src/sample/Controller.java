@@ -1,7 +1,12 @@
 package sample;
 
 
+import javafx.beans.binding.BooleanBinding;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,6 +19,9 @@ import java.util.Map;
 public class Controller {
     @FXML
     private Button createNewTableButton;
+
+    @FXML
+    private Button addDataFromFileToTableButton;
 
     @FXML
     private TableView<RowUserDataWrapper> tableView;
@@ -38,6 +46,10 @@ public class Controller {
             TableUserData userData = converter.Convert(file);
             addParsedInfo(userData);
         }
+    }
+    @FXML
+    private void initialize() {
+
     }
 
     private void addParsedInfo(TableUserData userData) {
@@ -69,7 +81,7 @@ public class Controller {
             column.editableProperty().set(true);
             tableView.getColumns().addAll(column);
         }
-        tableView.setItems(tableUserDataWrapper.getUserData());
+                    tableView.setItems(tableUserDataWrapper.getUserData());
     }
 
 }
