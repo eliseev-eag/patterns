@@ -4,15 +4,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane prefHeight="467.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <TableView fx:id="tableView" editable="true" layoutX="143.0" layoutY="14.0" prefHeight="443.0" prefWidth="314.0">
+      <TableView fx:id="tableView" editable="true" layoutX="143.0" layoutY="14.0" prefHeight="426.0" prefWidth="336.0">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="createNewTableButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#createNewTableColumnsButtonClick" prefHeight="67.0" prefWidth="116.0" text="Новый файл открыть" />
-      <Button fx:id="addDataFromFileToTableButton" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onMouseClicked="#addInfoFromFile" prefHeight="67.0" prefWidth="116.0" text="Добавить данные из другого файла" />
-
+      <Button fx:id="createNewTableButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#createNewTableColumnsButtonClick" prefHeight="67.0" prefWidth="116.0" text="Открыть новый файл" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="addDataFromFileToTableButton" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onMouseClicked="#addInfoFromFile" prefHeight="67.0" prefWidth="116.0" text="Добавить данные из другого файла" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

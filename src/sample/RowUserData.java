@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,12 @@ public class RowUserData {
         this.userData = userData;
     }
 
+    public RowUserData(List<String> inputRow,List<Integer> mappedProperty){
+        userData = new ArrayList<>();
+        for(int i = 0;i< mappedProperty.size();i++) {
+            userData.add(inputRow.get(mappedProperty.get(i)));
+        }
+    }
     public List<String> getUserData() {
         return userData;
     }

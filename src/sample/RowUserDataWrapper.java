@@ -10,10 +10,11 @@ import java.util.List;
  * Created by Елисеев on 05.01.2017.
  */
 public class RowUserDataWrapper {
-    List<StringProperty> properties = new ArrayList<StringProperty>() {
-    };
+    private List<StringProperty> properties = new ArrayList<StringProperty>();
+    private RowUserData rowUserData;
 
     public RowUserDataWrapper(RowUserData row){
+        this.rowUserData = row;
         for(int i = 0;i<row.size();i++){
             int finalI = i;
             SimpleStringProperty simpleStringProperty = new SimpleStringProperty(row.getCellValue(finalI)){
