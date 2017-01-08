@@ -30,9 +30,6 @@ public class StatsSelectionController {
     private CheckBox variance;
 
     @FXML
-    private CheckBox percentiles;
-
-    @FXML
     private CheckBox skewness;
 
     @FXML
@@ -49,12 +46,10 @@ public class StatsSelectionController {
         this.table = table;
         for(String columnHeader : table.getSortHeaders()){
             CheckBox checkBox = new CheckBox();
-            //checkBox.setId(columnHeader);
             checkBox.setText(columnHeader);
             checkBox.setPadding(new Insets(0,0,10,0));
             columns.getChildren().add(checkBox);
         }
-        //columns.getChildren().add();
 
     }
 }

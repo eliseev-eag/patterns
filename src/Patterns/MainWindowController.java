@@ -98,7 +98,7 @@ public class MainWindowController {
     }
 
     public void statsDialogOpen(MouseEvent mouseEvent) throws Exception {
-        new StatsSelection(tableUserDataWrapper.getNativeTable());
+        new StatsSelectionWindow(tableUserDataWrapper.getNativeTable());
     }
 }
 
