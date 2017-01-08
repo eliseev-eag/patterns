@@ -13,5 +13,7 @@
       </TableView>
       <Button fx:id="createNewTableButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#createNewTableColumnsButtonClick" prefHeight="67.0" prefWidth="116.0" text="Открыть новый файл" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="addDataFromFileToTableButton" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onMouseClicked="#addInfoFromFile" prefHeight="67.0" prefWidth="116.0" text="Добавить данные из другого файла" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="exportTableButton" layoutX="14.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#exportTableToFile" prefHeight="67.0" prefWidth="116.0" text="Экспорт таблицы в файл" textAlignment="CENTER" wrapText="true" />
+
    </children>
 </AnchorPane>

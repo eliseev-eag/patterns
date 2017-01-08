@@ -2,15 +2,14 @@ package sample;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Created by Елисеев on 05.01.2017.
  */
 public class RowUserDataWrapper {
-    private List<StringProperty> properties = new ArrayList<StringProperty>();
+    private ObservableList<StringProperty> properties = FXCollections.observableArrayList();
     private RowUserData rowUserData;
 
     public RowUserDataWrapper(RowUserData row){
@@ -30,6 +29,7 @@ public class RowUserDataWrapper {
                     row.setCellValue(finalI,value);
                 }
             };
+
             properties.add(simpleStringProperty);
         }
     }

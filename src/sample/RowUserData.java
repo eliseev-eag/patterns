@@ -1,5 +1,6 @@
 package sample;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class RowUserData {
             userData.add(inputRow.get(mappedProperty.get(i)));
         }
     }
-    public List<String> getUserData() {
+    public List<String> getValues() {
         return userData;
     }
 

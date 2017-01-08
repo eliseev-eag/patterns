@@ -3,9 +3,6 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +11,7 @@ import java.util.Map;
 public class TableUserDataWrapper {
     private ObservableList<RowUserDataWrapper> observableTable = FXCollections.observableArrayList();
     private final Map<String, Integer> headerMap;
+
     private TableUserData nativeTable;
 
     public TableUserDataWrapper(TableUserData data){
@@ -24,7 +22,18 @@ public class TableUserDataWrapper {
         headerMap = data.getHeaderMap();
     }
 
-    public ObservableList<RowUserDataWrapper> getUserData() {
+    public void addData(TableUserData newData){
+        Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
+        if(newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())){
+            int sizeBeforeAddingRows = nativeTable.size();
+            nativeTable.addData(newData);
+            int sizeAfterAddingRows = nativeTable.size();
+            for (int index = sizeBeforeAddingRows; index < sizeAfterAddingRows; index++)
+                observableTable.add(new RowUserDataWrapper(nativeTable.get(index)));
+        }
+    }
+
+    public ObservableList<RowUserDataWrapper> getTable() {
         return observableTable;
     }
 
@@ -32,15 +41,9 @@ public class TableUserDataWrapper {
         return headerMap;
     }
 
-    public void addData(TableUserData newData){
-        Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
-        if(newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())){
-                int sizeBeforeAddingRows = nativeTable.size();
-                nativeTable.addData(newData);
-                int sizeAfterAddingRows = nativeTable.size();
-                for (int index = sizeBeforeAddingRows; index < sizeAfterAddingRows; index++)
-                observableTable.add(new RowUserDataWrapper(nativeTable.get(index)));
-        }
+    public TableUserData getNativeTable() {
+        return nativeTable;
     }
+
 
 }

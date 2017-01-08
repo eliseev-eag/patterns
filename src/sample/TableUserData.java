@@ -45,10 +45,16 @@ public class TableUserData {
             for(Map.Entry<String,Integer> srcHeader: headerMap.entrySet())
                 indexMappedProperty.set(srcHeader.getValue(),newDataHeaderMap.get(srcHeader.getKey()));
             for(int i = 0;i<newData.size();i++){
-                RowUserData newRow = new RowUserData(newData.get(i).getUserData(), indexMappedProperty);
+                RowUserData newRow = new RowUserData(newData.get(i).getValues(), indexMappedProperty);
                 userData.add(newRow);
             }
         }
+    }
 
+    public List<String> getSortHeaders(){
+        List<String> result = new ArrayList<String>(Collections.nCopies(headerMap.size(),""));
+        for(Map.Entry<String,Integer> srcHeader: headerMap.entrySet())
+            result.set(srcHeader.getValue(),srcHeader.getKey());
+        return result;
     }
 }

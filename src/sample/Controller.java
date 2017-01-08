@@ -1,12 +1,7 @@
 package sample;
 
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,14 +49,31 @@ public class Controller {
 
     private void addParsedInfo(TableUserData userData) {
         tableUserDataWrapper.addData(userData);
+    }
 
+    private File saveFileDialog(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Document");
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(createNewTableButton.getScene().getWindow());
+        return file;
+    }
+    @FXML
+    private void exportTableToFile() throws IOException {
+        File file = saveFileDialog();
+        if(file!=null){
+            Exporter exporter = new CSVExporter();
+            exporter.Export(file,tableUserDataWrapper.getNativeTable());
+        }
     }
 
     private File OpenFileDialog() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Document");
         FileChooser.ExtensionFilter extFilter =
-                new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");//Расширение
+                new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(createNewTableButton.getScene().getWindow());
         return file;
@@ -81,7 +93,7 @@ public class Controller {
             column.editableProperty().set(true);
             tableView.getColumns().addAll(column);
         }
-                    tableView.setItems(tableUserDataWrapper.getUserData());
+        tableView.setItems(tableUserDataWrapper.getTable());
     }
 
 }
