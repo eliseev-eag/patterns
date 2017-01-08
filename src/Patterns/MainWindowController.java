@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -96,6 +97,9 @@ public class MainWindowController {
         tableView.setItems(tableUserDataWrapper.getTable());
     }
 
+    public void statsDialogOpen(MouseEvent mouseEvent) throws Exception {
+        new StatsSelection(tableUserDataWrapper.getNativeTable());
+    }
 }
 
 
