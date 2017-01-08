@@ -1,4 +1,4 @@
-package sample;
+package Patterns;
 
 
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-public class Controller {
+public class MainWindowController {
     @FXML
     private Button createNewTableButton;
 
