@@ -5,8 +5,12 @@ package Patterns;
  */
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.FlowPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatsSelectionController {
     private TableUserData table;
@@ -50,6 +54,13 @@ public class StatsSelectionController {
             checkBox.setPadding(new Insets(0,0,10,0));
             columns.getChildren().add(checkBox);
         }
+    }
 
+    @FXML
+    private void generateStats(){
+        List<String> checkedColumnsName = new ArrayList<>();
+        for(Node node:columns.getChildren())
+            if(node instanceof CheckBox)
+                checkedColumnsName.add(((CheckBox)node).getText());
     }
 }

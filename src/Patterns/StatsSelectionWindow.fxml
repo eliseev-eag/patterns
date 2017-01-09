@@ -19,8 +19,6 @@
       <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <SplitPane>
-         <items>
             <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
                <items>
                   <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
@@ -100,8 +98,6 @@
                   </FlowPane>
                </items>
             </SplitPane>
-         </items>
-      </SplitPane>
       <Button mnemonicParsing="false" text="Генерировать статистику" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

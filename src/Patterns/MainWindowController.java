@@ -1,6 +1,8 @@
 package Patterns;
 
 
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -20,6 +22,12 @@ public class MainWindowController {
     private Button addDataFromFileToTableButton;
 
     @FXML
+    private Button exportTableButton;
+
+    @FXML
+    private Button statsDialogOpenButton;
+
+    @FXML
     private TableView<RowUserDataWrapper> tableView;
 
     private  TableUserDataWrapper tableUserDataWrapper;
@@ -35,7 +43,7 @@ public class MainWindowController {
     }
 
     @FXML
-    public void addInfoFromFile() throws IOException {
+    private void addInfoFromFile() throws IOException {
         File file = OpenFileDialog();
         if(file!=null) {
             InputDataConverter converter = new CSVDataConverter();
@@ -45,7 +53,12 @@ public class MainWindowController {
     }
     @FXML
     private void initialize() {
-
+        tableView.getColumns().addListener(
+                (ListChangeListener.Change<? extends TableColumn<? extends RowUserDataWrapper,?>> c) ->
+                {addDataFromFileToTableButton.setDisable(tableView.getColumns().isEmpty());
+                statsDialogOpenButton.setDisable(tableView.getColumns().isEmpty());
+                exportTableButton.setDisable(tableView.getColumns().isEmpty());
+                });
     }
 
     private void addParsedInfo(TableUserData userData) {
