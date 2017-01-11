@@ -13,8 +13,12 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.FlowPane;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleSupplier;
 
 public class StatsSelectionController {
     private TableUserData table;
@@ -23,6 +27,17 @@ public class StatsSelectionController {
     @FXML
     private TreeView tree;
     private CheckBoxTreeItem<String> rootItem;
+    private Statistics statistics = new Statistics();
+    private final Map<String, DoubleSupplier> checkboxContent = new HashMap<String, DoubleSupplier>(){{
+        put("Минимум",  statistics::getMin);
+        put("Максимум", statistics::getMax);
+        put("Среднее",   statistics::getMean);
+        put("Стандартное отклонение",   statistics::getStandardDeviation);
+        put("Сумма",  statistics::getSum);
+        put("Дисперсия", statistics::getVariance);
+        put("Коэф. ассиметрии",   statistics::getSkewness);
+        put("Коэф. эксцесса",   statistics::getKurtosis);
+    }};
 
     @FXML
     public void initialiseData(TableUserData table){
@@ -38,9 +53,9 @@ public class StatsSelectionController {
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
-        final String[] checkboxContent =
+        /*final String[] checkboxContent =
                 {"Минимум", "Максимум","Среднее","Сумма","Стандартное отклонение","Дисперсия","Коэф. ассиметрии","Коэф. эксцесса"};
-
+        */
         rootItem =  new CheckBoxTreeItem<String>("Колонки");
         rootItem.setExpanded(true);
         tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
@@ -49,7 +64,7 @@ public class StatsSelectionController {
 
             CheckBoxTreeItem<String> checkBoxTreeItem =  new CheckBoxTreeItem<String>(columnHeader);
             rootItem.getChildren().add(checkBoxTreeItem);
-            for(String nestedValue : checkboxContent){
+            for(String nestedValue : checkboxContent.keySet()){
                 CheckBoxTreeItem<String> nestedCheckbox =  new CheckBoxTreeItem<String>(nestedValue);
                 checkBoxTreeItem.getChildren().add(nestedCheckbox);
             }
@@ -83,9 +98,15 @@ public class StatsSelectionController {
         }
     }
 
-    private void generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> checkedStats){
-        Statistics statistics = new Statistics();
+    private void generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> columnNameCheckBox){
         statistics.setValues(values);
+        for(TreeItem<String> child: columnNameCheckBox.getChildren()) {
+            CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
+            if (checkBoxTreeItem.isSelected()) {
+                System.out.println(columnNameCheckBox.getValue() + " " + checkBoxTreeItem.getValue() + ":" +
+                checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
+            }
+        }
     }
 
 }
