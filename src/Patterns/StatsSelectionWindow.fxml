@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.StatsSelectionController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.StatsSelectionController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -84,7 +84,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </FlowPane>
-                  <FlowPane fx:id="columns" alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
+                  <FlowPane fx:id="columnNames" alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -98,6 +98,6 @@
                   </FlowPane>
                </items>
             </SplitPane>
-      <Button mnemonicParsing="false" text="Генерировать статистику" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onMouseClicked="#generateStats" text="Генерировать статистику" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

@@ -14,7 +14,7 @@ public class StatsSelectionWindow {
         FXMLLoader loader = new FXMLLoader(   getClass().getResource("StatsSelectionWindow.fxml"));
         Parent root = loader.load();
         StatsSelectionController controller =loader.<StatsSelectionController>getController();
-        controller.initalizeData(table);
+        controller.initialiseData(table);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);

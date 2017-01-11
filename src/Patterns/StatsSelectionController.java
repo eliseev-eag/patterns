@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.layout.FlowPane;
 
 import java.util.ArrayList;
@@ -43,24 +44,29 @@ public class StatsSelectionController {
     private CheckBox kurtosis;
 
     @FXML
-    private FlowPane columns;
+    private FlowPane columnNames;
 
     @FXML
-    public void initalizeData(TableUserData table){
+    public void initialiseData(TableUserData table){
         this.table = table;
         for(String columnHeader : table.getSortHeaders()){
             CheckBox checkBox = new CheckBox();
             checkBox.setText(columnHeader);
             checkBox.setPadding(new Insets(0,0,10,0));
-            columns.getChildren().add(checkBox);
+            columnNames.getChildren().add(checkBox);
         }
     }
 
     @FXML
     private void generateStats(){
         List<String> checkedColumnsName = new ArrayList<>();
-        for(Node node:columns.getChildren())
-            if(node instanceof CheckBox)
-                checkedColumnsName.add(((CheckBox)node).getText());
+        for(Node node: columnNames.getChildren())
+            if(node instanceof CheckBox){
+                CheckBox checkBox = (CheckBox)node;
+                if(checkBox.isSelected())
+                    checkedColumnsName.add((checkBox).getText());
+        }
+
     }
+
 }
