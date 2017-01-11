@@ -57,4 +57,12 @@ public class TableUserData {
             result.set(srcHeader.getValue(),srcHeader.getKey());
         return result;
     }
+
+    public List<String> getColumnValues(String columnHeader){
+        List<String> result = new ArrayList<>();
+        int columnIndex = headerMap.get(columnHeader);
+        for(RowUserData row : userData)
+            result.add(row.getCellValue(columnIndex));
+        return result;
+    }
 }
