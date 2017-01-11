@@ -8,6 +8,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.FlowPane;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class StatsSelectionController {
     private TableUserData table;
-
+/*
     @FXML
     private CheckBox min;
 
@@ -41,20 +43,39 @@ public class StatsSelectionController {
     private CheckBox median;
 
     @FXML
-    private CheckBox kurtosis;
+    private CheckBox kurtosis;*/
 
     @FXML
     private FlowPane columnNames;
 
     @FXML
+    private TreeView tree;
+
+    @FXML
     public void initialiseData(TableUserData table){
+        final String[] checkboxContent =
+                {"Минимум", "Максимум","Среднее","Сумма","Стандартное отклонение","Дисперсия","Коэф. ассиметрии","Медиана","Коэф. эксцесса"};
         this.table = table;
+
+        CheckBoxTreeItem<String> rootItem =  new CheckBoxTreeItem<String>("Колонки");
+        rootItem.setExpanded(true);
+        //final TreeView tree = new TreeView(rootItem);
+        //tree.setEditable(true);
+        tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+        //columnNames.getChildren().add(tree);
+
         for(String columnHeader : table.getSortHeaders()){
-            CheckBox checkBox = new CheckBox();
-            checkBox.setText(columnHeader);
-            checkBox.setPadding(new Insets(0,0,10,0));
-            columnNames.getChildren().add(checkBox);
+
+            CheckBoxTreeItem<String> checkBoxTreeItem =  new CheckBoxTreeItem<String>(columnHeader);
+            rootItem.getChildren().add(checkBoxTreeItem);
+            checkBoxTreeItem.setExpanded(true);
+            for(String nestedValue : checkboxContent){
+                CheckBoxTreeItem<String> nestedCheckbox =  new CheckBoxTreeItem<String>(nestedValue);
+                checkBoxTreeItem.getChildren().add(nestedCheckbox);
+            }
         }
+        tree.setRoot(rootItem);
+        tree.setShowRoot(true);
     }
 
     @FXML
