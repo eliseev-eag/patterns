@@ -38,11 +38,4 @@ public class RowUserDataWrapper {
         return properties.get(i);
     }
 
-    public String getPropertyValue(int i){
-        return properties.get(i).get();
-    }
-
-    public void setPropertyValue(int i,String value){
-        properties.get(i).set(value);
-    }
 }

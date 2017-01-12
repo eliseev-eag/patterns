@@ -6,10 +6,7 @@ package Patterns;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.FlowPane;
 
@@ -50,6 +47,7 @@ public class StatsSelectionController {
             checkBox.setPadding(new Insets(0,0,10,0));
             generateChart.getChildren().add(checkBox);
         }
+        Button createChartButton = new Button();
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
@@ -86,6 +84,7 @@ public class StatsSelectionController {
 
     @FXML
     private void getSelectedColumnNamesAndGenerateStats(){
+        StringBuilder statsStringBuilder = new StringBuilder();
         for(TreeItem<String> child: rootItem.getChildren()){
             CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>)child;
             if(checkBoxTreeItem.isSelected()) {
@@ -93,20 +92,29 @@ public class StatsSelectionController {
                 List<Double> doubleValues = new ArrayList<>();
                 for(String value :values)
                     doubleValues.add(Double.parseDouble(value));
-                generateStatsForColumnValues(doubleValues,checkBoxTreeItem);
+                statsStringBuilder.append(generateStatsForColumnValues(doubleValues,checkBoxTreeItem));
             }
         }
+        new StatsAndCharsView(statsStringBuilder.toString());
     }
 
-    private void generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> columnNameCheckBox){
+    private String generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> columnNameCheckBox){
         statistics.setValues(values);
+        StringBuilder statsStringBuilder = new StringBuilder();
         for(TreeItem<String> child: columnNameCheckBox.getChildren()) {
             CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
             if (checkBoxTreeItem.isSelected()) {
-                System.out.println(columnNameCheckBox.getValue() + " " + checkBoxTreeItem.getValue() + ":" +
-                checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
+                statsStringBuilder.append(columnNameCheckBox.getValue());
+                statsStringBuilder.append(" ");
+                statsStringBuilder.append(checkBoxTreeItem.getValue());
+                statsStringBuilder.append(": ");
+                statsStringBuilder.append(checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
+                statsStringBuilder.append("\n");
+                //System.out.println(columnNameCheckBox.getValue() + " " + checkBoxTreeItem.getValue() + ":" +
+                //checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
             }
         }
+        return statsStringBuilder.toString();
     }
 
 }

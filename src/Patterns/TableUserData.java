@@ -26,10 +26,6 @@ public class TableUserData {
         return userData;
     }
 
-    public void add(RowUserData row){
-        userData.add(row);
-    }
-
     public RowUserData get(int index){
         return userData.get(index);
     }
@@ -49,6 +45,7 @@ public class TableUserData {
                 userData.add(newRow);
             }
         }
+        else throw new IllegalStateException("Не совпадающие заголовки в таблицах");
     }
 
     public List<String> getSortHeaders(){

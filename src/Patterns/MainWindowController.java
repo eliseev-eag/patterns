@@ -1,9 +1,9 @@
 package Patterns;
 
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -48,7 +48,12 @@ public class MainWindowController {
         if(file!=null) {
             InputDataConverter converter = new CSVDataConverter();
             TableUserData userData = converter.Convert(file);
-            addParsedInfo(userData);
+            try {
+                addParsedInfo(userData);
+            }
+            catch (IllegalStateException exception){
+                new Alert(Alert.AlertType.ERROR,exception.getMessage()).showAndWait();
+            }
         }
     }
     @FXML
@@ -79,7 +84,7 @@ public class MainWindowController {
         File file = saveFileDialog();
         if(file!=null){
             Exporter exporter = new CSVExporter();
-            exporter.Export(file,tableUserDataWrapper.getNativeTable());
+            exporter.Export(file,tableUserDataWrapper.getUserData());
         }
     }
 
@@ -111,7 +116,7 @@ public class MainWindowController {
     }
 
     public void statsDialogOpen(MouseEvent mouseEvent) throws Exception {
-        new StatsSelectionWindow(tableUserDataWrapper.getNativeTable());
+        new StatsSelectionWindow(tableUserDataWrapper.getUserData());
     }
 }
 
