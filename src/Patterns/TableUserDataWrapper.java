@@ -20,15 +20,11 @@ public class TableUserDataWrapper {
     }
 
     public void addData(TableUserData newData){
-        Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
-        if(newDataHeaderMap.keySet().containsAll(nativeTable.getHeaderMap().keySet())){
             int sizeBeforeAddingRows = nativeTable.size();
             nativeTable.addData(newData);
             int sizeAfterAddingRows = nativeTable.size();
             for (int index = sizeBeforeAddingRows; index < sizeAfterAddingRows; index++)
                 observableTable.add(new RowUserDataWrapper(nativeTable.get(index)));
-        }
-
     }
 
     public ObservableList<RowUserDataWrapper> getTable() {

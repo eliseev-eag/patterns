@@ -33,7 +33,7 @@ public class MainWindowController {
     private  TableUserDataWrapper tableUserDataWrapper;
 
     @FXML
-    public void createNewTableColumnsButtonClick() throws IOException {
+    public void createNewTable() throws IOException {
         File file = OpenFileDialog();
         if(file!=null) {
             InputDataConverter converter = new CSVDataConverter();

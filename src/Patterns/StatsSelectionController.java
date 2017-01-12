@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.FlowPane;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,9 +50,6 @@ public class StatsSelectionController {
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
-        /*final String[] checkboxContent =
-                {"Минимум", "Максимум","Среднее","Сумма","Стандартное отклонение","Дисперсия","Коэф. ассиметрии","Коэф. эксцесса"};
-        */
         rootItem =  new CheckBoxTreeItem<String>("Колонки");
         rootItem.setExpanded(true);
         tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
@@ -110,8 +106,6 @@ public class StatsSelectionController {
                 statsStringBuilder.append(": ");
                 statsStringBuilder.append(checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
                 statsStringBuilder.append("\n");
-                //System.out.println(columnNameCheckBox.getValue() + " " + checkBoxTreeItem.getValue() + ":" +
-                //checkboxContent.get(checkBoxTreeItem.getValue()).getAsDouble());
             }
         }
         return statsStringBuilder.toString();
