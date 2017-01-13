@@ -46,7 +46,7 @@ public class StatsSelectionController {
             checkBox.setPadding(new Insets(0,0,10,0));
             generateChart.getChildren().add(checkBox);
         }
-        Button createChartButton = new Button();
+        //Button createChartButton = new Button();
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
@@ -81,17 +81,27 @@ public class StatsSelectionController {
     @FXML
     private void getSelectedColumnNamesAndGenerateStats(){
         StringBuilder statsStringBuilder = new StringBuilder();
-        for(TreeItem<String> child: rootItem.getChildren()){
-            CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>)child;
-            if(checkBoxTreeItem.isSelected()) {
-                List<String> values = table.getColumnValues(checkBoxTreeItem.getValue());
-                List<Double> doubleValues = new ArrayList<>();
-                for(String value :values)
-                    doubleValues.add(Double.parseDouble(value));
-                statsStringBuilder.append(generateStatsForColumnValues(doubleValues,checkBoxTreeItem));
+        try {
+            for (TreeItem<String> child : rootItem.getChildren()) {
+                CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
+                if (checkBoxTreeItem.isSelected()) {
+                    List<String> values = table.getColumnValues(checkBoxTreeItem.getValue());
+                    List<Double> doubleValues = new ArrayList<>();
+                    try{
+                        for (String value : values)
+                            doubleValues.add(Double.parseDouble(value));
+                    }
+                    catch (NumberFormatException exception){
+                        throw new IllegalArgumentException("Не цифровые значения в столбце " + checkBoxTreeItem.getValue());
+                    }
+                    statsStringBuilder.append(generateStatsForColumnValues(doubleValues, checkBoxTreeItem));
+                }
             }
+            new StatsAndCharsView(statsStringBuilder.toString());
         }
-        new StatsAndCharsView(statsStringBuilder.toString());
+        catch (IllegalArgumentException exception) {
+            new Alert(Alert.AlertType.ERROR,exception.getMessage()).showAndWait();
+        }
     }
 
     private String generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> columnNameCheckBox){
