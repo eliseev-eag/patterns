@@ -3,10 +3,8 @@ package Patterns;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
@@ -109,12 +107,21 @@ public class MainWindowController {
             String key = entry.getKey();
             TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(key);
             column.setCellValueFactory(param -> (param.getValue().getProperty(entry.getValue())));
+            column.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            column.setOnEditCommit(event -> onEditCommitSelectedTableCommit(event));
             column.editableProperty().set(true);
             tableView.getColumns().addAll(column);
         }
         tableView.setItems(tableUserDataWrapper.getTable());
+        tableView.setEditable(true);
     }
 
+    private void onEditCommitSelectedTableCommit(TableColumn.CellEditEvent<RowUserDataWrapper,String> event){
+        int columnIndex = event.getTablePosition().getColumn();
+        String newValue = event.getNewValue();
+        event.getRowValue().getProperty(columnIndex).setValue(newValue);
+    }
     public void statsDialogOpen(MouseEvent mouseEvent) throws Exception {
         new StatsSelectionWindow(tableUserDataWrapper.getUserData());
     }
