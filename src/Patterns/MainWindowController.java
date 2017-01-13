@@ -36,7 +36,7 @@ public class MainWindowController {
     public void createNewTable() throws IOException {
         File file = OpenFileDialog();
         if(file!=null) {
-            InputDataConverter converter = new CSVDataConverter();
+            InputDataConverter converter = InputDataFlyweight.getInputConverter(file);
             TableUserData userData = converter.Convert(file);
             CreateTableViewColumns(userData);
         }
@@ -46,7 +46,7 @@ public class MainWindowController {
     private void addInfoFromFile() throws IOException {
         File file = OpenFileDialog();
         if(file!=null) {
-            InputDataConverter converter = new CSVDataConverter();
+            InputDataConverter converter = InputDataFlyweight.getInputConverter(file);
             TableUserData userData = converter.Convert(file);
             try {
                 addParsedInfo(userData);
@@ -83,7 +83,7 @@ public class MainWindowController {
     private void exportTableToFile() throws IOException {
         File file = saveFileDialog();
         if(file!=null){
-            Exporter exporter = new CSVExporter();
+            Exporter exporter = ExporterFlyweight.getExporter(file);
             exporter.Export(file,tableUserDataWrapper.getUserData());
         }
     }
