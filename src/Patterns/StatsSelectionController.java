@@ -17,12 +17,17 @@ import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 public class StatsSelectionController {
-    private TableUserData table;
-    @FXML
-    private FlowPane generateChart;
+
     @FXML
     private TreeView tree;
+    @FXML
+    private ComboBox OYAxisComboBox;
+    @FXML
+    private ComboBox OXAxisComboBox;
+    @FXML
+    private Button createChartButton;
     private CheckBoxTreeItem<String> rootItem;
+    private TableUserData table;
     private Statistics statistics = new Statistics();
     private final Map<String, DoubleSupplier> checkboxContent = new HashMap<String, DoubleSupplier>(){{
         put("Минимум",  statistics::getMin);
@@ -38,15 +43,18 @@ public class StatsSelectionController {
     @FXML
     public void initialiseData(TableUserData table){
         this.table = table;
-        generateCheckboxTreeView(table.getSortHeaders());
-
-        for(String columnHeader : table.getSortHeaders()){
-            CheckBox checkBox = new CheckBox();
-            checkBox.setText(columnHeader);
-            checkBox.setPadding(new Insets(0,0,10,0));
-            generateChart.getChildren().add(checkBox);
+        List<String> sortHeaders = table.getSortHeaders();
+        generateCheckboxTreeView(sortHeaders);
+        for(String columnHeader : sortHeaders){
+            OXAxisComboBox.getItems().add(columnHeader);
+            OYAxisComboBox.getItems().add(columnHeader);
         }
-        //Button createChartButton = new Button();
+        OXAxisComboBox.setValue(sortHeaders.get(0));
+        if(sortHeaders.size() > 1)
+            OYAxisComboBox.setValue(sortHeaders.get(1));
+        else
+            OYAxisComboBox.setValue(sortHeaders.get(0));
+        createChartButton.setDisable(table.getHeaderMap().size() < 2);
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
@@ -68,23 +76,12 @@ public class StatsSelectionController {
     }
 
     @FXML
-    private void generateStats(){
-        List<String> checkedColumnsName = new ArrayList<>();
-        for(Node node: generateChart.getChildren())
-            if(node instanceof CheckBox){
-                CheckBox checkBox = (CheckBox)node;
-                if(checkBox.isSelected())
-                    checkedColumnsName.add((checkBox).getText());
-            }
-    }
-
-    @FXML
     private void getSelectedColumnNamesAndGenerateStats(){
         StringBuilder statsStringBuilder = new StringBuilder();
         try {
             for (TreeItem<String> child : rootItem.getChildren()) {
                 CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
-                if (checkBoxTreeItem.isSelected()) {
+                if (checkBoxTreeItem.isSelected() || checkBoxTreeItem.isIndeterminate()) {
                     List<String> values = table.getColumnValues(checkBoxTreeItem.getValue());
                     List<Double> doubleValues = new ArrayList<>();
                     try{
@@ -97,7 +94,11 @@ public class StatsSelectionController {
                     statsStringBuilder.append(generateStatsForColumnValues(doubleValues, checkBoxTreeItem));
                 }
             }
-            new StatsAndCharsView(statsStringBuilder.toString());
+            String stats = statsStringBuilder.toString();
+            if(!stats.isEmpty())
+                new StatsAndCharsView(stats);
+            else
+                new Alert(Alert.AlertType.INFORMATION,"Выберите хотя бы одну колонку").showAndWait();
         }
         catch (IllegalArgumentException exception) {
             new Alert(Alert.AlertType.ERROR,exception.getMessage()).showAndWait();
