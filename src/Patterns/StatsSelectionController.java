@@ -21,9 +21,9 @@ public class StatsSelectionController {
     @FXML
     private TreeView tree;
     @FXML
-    private ComboBox OYAxisComboBox;
+    private ComboBox<String> OYAxisComboBox;
     @FXML
-    private ComboBox OXAxisComboBox;
+    private ComboBox<String> OXAxisComboBox;
     @FXML
     private Button createChartButton;
     private CheckBoxTreeItem<String> rootItem;
@@ -121,5 +121,16 @@ public class StatsSelectionController {
         }
         return statsStringBuilder.toString();
     }
-
+    @FXML
+    private void generateChart(){
+        if(OYAxisComboBox.getValue().equals(OXAxisComboBox.getValue()))
+            new Alert(Alert.AlertType.INFORMATION,"Выберите разные колонки для осей").showAndWait();
+        else
+            try{
+                new StatsAndCharsView(OXAxisComboBox.getValue(), OYAxisComboBox.getValue(), table);
+            }
+            catch(NumberFormatException exception){
+                new Alert(Alert.AlertType.INFORMATION,"Встретилось нечисловое значение в одной из колонок").showAndWait();
+            }
+    }
 }

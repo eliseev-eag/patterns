@@ -8,14 +8,19 @@ import java.util.Map;
  * Created by happy on 13.01.2017.
  */
 public class InputDataFlyweight {
-    private static Map<String,InputDataConverter> fileExtensionToInputMap = new HashMap<String,InputDataConverter>();
+    private static InputDataFlyweight instance;
+    private Map<String,InputDataConverter> fileExtensionToInputMap = new HashMap<String,InputDataConverter>();
 
-    private static String getFileExtension(File file){
+    public static InputDataFlyweight getInstance() {
+        return instance;
+    }
+
+    private String getFileExtension(File file){
         String path = file.getPath();
         return path.substring(path.lastIndexOf('.')+1);
     }
 
-    public static InputDataConverter getInputConverter(File file){
+    public InputDataConverter getInputConverter(File file){
         String extension = getFileExtension(file);
         if(fileExtensionToInputMap.containsKey(extension))
             return fileExtensionToInputMap.get(extension);

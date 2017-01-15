@@ -8,14 +8,20 @@ import java.util.Map;
  * Created by happy on 13.01.2017.
  */
 public class ExporterFlyweight {
-    private static Map<String,Exporter> fileExtensionToExporterMap = new HashMap<String,Exporter>();
+    private static ExporterFlyweight instance;
 
-    private static String getFileExtension(File file){
+    private Map<String,Exporter> fileExtensionToExporterMap = new HashMap<String,Exporter>();
+
+    public static ExporterFlyweight getInstance() {
+        return instance;
+    }
+
+    private String getFileExtension(File file){
         String path = file.getPath();
         return path.substring(path.lastIndexOf('.')+1);
     }
 
-    public static Exporter getExporter(File file){
+    public Exporter getExporter(File file){
         String extension = getFileExtension(file);
         if(fileExtensionToExporterMap.containsKey(extension))
             return fileExtensionToExporterMap.get(extension);

@@ -26,4 +26,20 @@ public class StatsAndCharsView {
         stage.setScene(scene);
         stage.show();
     }
+
+    public StatsAndCharsView(String oxAxis, String oyAxis,TableUserData table){
+        FXMLLoader loader = new FXMLLoader(   getClass().getResource("StatsAndChartsView.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        StatsAndChartsViewController controller = loader.getController();
+        controller.initialiseCharts(oxAxis, oyAxis,table);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
