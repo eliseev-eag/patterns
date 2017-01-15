@@ -11,7 +11,10 @@ public class InputDataFlyweight {
     private static InputDataFlyweight instance;
     private Map<String,InputDataConverter> fileExtensionToInputMap = new HashMap<String,InputDataConverter>();
 
+    private InputDataFlyweight(){}
     public static InputDataFlyweight getInstance() {
+        if(instance == null)
+            instance = new InputDataFlyweight();
         return instance;
     }
 

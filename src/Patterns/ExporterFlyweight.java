@@ -12,7 +12,10 @@ public class ExporterFlyweight {
 
     private Map<String,Exporter> fileExtensionToExporterMap = new HashMap<String,Exporter>();
 
+    private ExporterFlyweight(){};
     public static ExporterFlyweight getInstance() {
+        if(instance == null)
+            instance = new ExporterFlyweight();
         return instance;
     }
 
