@@ -28,7 +28,7 @@ public class RowUserData {
         return userData.get(index);
     }
 
-    public void setCellValue(int index,String value){
+    public void setCellValue(int index, String value){
         userData.set(index,value);
     }
 

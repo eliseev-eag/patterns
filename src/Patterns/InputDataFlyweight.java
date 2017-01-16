@@ -9,29 +9,31 @@ import java.util.Map;
  */
 public class InputDataFlyweight {
     private static InputDataFlyweight instance;
-    private Map<String,InputDataConverter> fileExtensionToInputMap = new HashMap<String,InputDataConverter>();
+    private Map<String, InputDataConverter> fileExtensionToInputMap = new HashMap<String, InputDataConverter>();
 
-    private InputDataFlyweight(){}
+    private InputDataFlyweight() {
+    }
+
     public static InputDataFlyweight getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new InputDataFlyweight();
         return instance;
     }
 
-    private String getFileExtension(File file){
+    private String getFileExtension(File file) {
         String path = file.getPath();
-        return path.substring(path.lastIndexOf('.')+1);
+        return path.substring(path.lastIndexOf('.') + 1);
     }
 
-    public InputDataConverter getInputConverter(File file){
+    public InputDataConverter getInputConverter(File file) {
         String extension = getFileExtension(file);
-        if(fileExtensionToInputMap.containsKey(extension))
+        if (fileExtensionToInputMap.containsKey(extension))
             return fileExtensionToInputMap.get(extension);
         else {
-            switch (extension){
-                case "csv":{
+            switch (extension) {
+                case "csv": {
                     InputDataConverter csvConverter = new CSVDataConverter();
-                    fileExtensionToInputMap.put(extension,csvConverter);
+                    fileExtensionToInputMap.put(extension, csvConverter);
                     return csvConverter;
                 }
                 default:

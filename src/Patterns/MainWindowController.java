@@ -28,12 +28,12 @@ public class MainWindowController {
     @FXML
     private TableView<RowUserDataWrapper> tableView;
 
-    private  TableUserDataWrapper tableUserDataWrapper;
+    private TableUserDataWrapper tableUserDataWrapper;
 
     @FXML
     public void createNewTable() throws IOException {
         File file = OpenFileDialog();
-        if(file!=null) {
+        if (file != null) {
             InputDataConverter converter = InputDataFlyweight.getInstance().getInputConverter(file);
             TableUserData userData = converter.Convert(file);
             CreateTableViewColumns(userData);
@@ -43,24 +43,25 @@ public class MainWindowController {
     @FXML
     private void addInfoFromFile() throws IOException {
         File file = OpenFileDialog();
-        if(file!=null) {
+        if (file != null) {
             InputDataConverter converter = InputDataFlyweight.getInstance().getInputConverter(file);
             TableUserData userData = converter.Convert(file);
             try {
                 addParsedInfo(userData);
-            }
-            catch (IllegalStateException exception){
-                new Alert(Alert.AlertType.ERROR,exception.getMessage()).showAndWait();
+            } catch (IllegalStateException exception) {
+                new Alert(Alert.AlertType.ERROR, exception.getMessage()).showAndWait();
             }
         }
     }
+
     @FXML
     private void initialize() {
         tableView.getColumns().addListener(
-                (ListChangeListener.Change<? extends TableColumn<? extends RowUserDataWrapper,?>> c) ->
-                {addDataFromFileToTableButton.setDisable(tableView.getColumns().isEmpty());
-                statsDialogOpenButton.setDisable(tableView.getColumns().isEmpty());
-                exportTableButton.setDisable(tableView.getColumns().isEmpty());
+                (ListChangeListener.Change<? extends TableColumn<? extends RowUserDataWrapper, ?>> c) ->
+                {
+                    addDataFromFileToTableButton.setDisable(tableView.getColumns().isEmpty());
+                    statsDialogOpenButton.setDisable(tableView.getColumns().isEmpty());
+                    exportTableButton.setDisable(tableView.getColumns().isEmpty());
                 });
     }
 
@@ -68,7 +69,7 @@ public class MainWindowController {
         tableUserDataWrapper.addData(userData);
     }
 
-    private File saveFileDialog(){
+    private File saveFileDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Document");
         FileChooser.ExtensionFilter extFilter =
@@ -77,12 +78,13 @@ public class MainWindowController {
         File file = fileChooser.showSaveDialog(createNewTableButton.getScene().getWindow());
         return file;
     }
+
     @FXML
     private void exportTableToFile() throws IOException {
         File file = saveFileDialog();
-        if(file!=null){
+        if (file != null) {
             Exporter exporter = ExporterFlyweight.getInstance().getExporter(file);
-            exporter.Export(file,tableUserDataWrapper.getUserData());
+            exporter.Export(file, tableUserDataWrapper.getUserData());
         }
     }
 
@@ -96,7 +98,7 @@ public class MainWindowController {
         return file;
     }
 
-    private void CreateTableViewColumns(TableUserData userData){
+    private void CreateTableViewColumns(TableUserData userData) {
         tableView.getColumns().clear();
         tableView.editableProperty().set(true);
         tableUserDataWrapper = new TableUserDataWrapper(userData);
@@ -117,11 +119,12 @@ public class MainWindowController {
         tableView.setEditable(true);
     }
 
-    private void onEditCommitSelectedTableCommit(TableColumn.CellEditEvent<RowUserDataWrapper,String> event){
+    private void onEditCommitSelectedTableCommit(TableColumn.CellEditEvent<RowUserDataWrapper, String> event) {
         int columnIndex = event.getTablePosition().getColumn();
         String newValue = event.getNewValue();
         event.getRowValue().getProperty(columnIndex).setValue(newValue);
     }
+
     public void statsDialogOpen(MouseEvent mouseEvent) throws Exception {
         new StatsSelectionWindow(tableUserDataWrapper.getUserData());
     }

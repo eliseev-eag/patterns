@@ -10,29 +10,31 @@ import java.util.Map;
 public class ExporterFlyweight {
     private static ExporterFlyweight instance;
 
-    private Map<String,Exporter> fileExtensionToExporterMap = new HashMap<String,Exporter>();
+    private Map<String, Exporter> fileExtensionToExporterMap = new HashMap<String, Exporter>();
 
-    private ExporterFlyweight(){};
+    private ExporterFlyweight() {
+    }
+
     public static ExporterFlyweight getInstance() {
-        if(instance == null)
+        if (instance == null)
             instance = new ExporterFlyweight();
         return instance;
     }
 
-    private String getFileExtension(File file){
+    private String getFileExtension(File file) {
         String path = file.getPath();
-        return path.substring(path.lastIndexOf('.')+1);
+        return path.substring(path.lastIndexOf('.') + 1);
     }
 
-    public Exporter getExporter(File file){
+    public Exporter getExporter(File file) {
         String extension = getFileExtension(file);
-        if(fileExtensionToExporterMap.containsKey(extension))
+        if (fileExtensionToExporterMap.containsKey(extension))
             return fileExtensionToExporterMap.get(extension);
         else {
-            switch (extension){
-                case "csv":{
+            switch (extension) {
+                case "csv": {
                     Exporter csvExporter = new CSVExporter();
-                    fileExtensionToExporterMap.put(extension,csvExporter);
+                    fileExtensionToExporterMap.put(extension, csvExporter);
                     return csvExporter;
                 }
                 default:

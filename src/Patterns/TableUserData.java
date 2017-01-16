@@ -26,39 +26,38 @@ public class TableUserData {
         return userData;
     }
 
-    public RowUserData get(int index){
+    public RowUserData get(int index) {
         return userData.get(index);
     }
 
-    public int size(){
+    public int size() {
         return userData.size();
     }
 
-    public void addData(TableUserData newData){
+    public void addData(TableUserData newData) {
         Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
-        if(newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())){
-            List<Integer> indexMappedProperty = new ArrayList<>(Collections.nCopies(headerMap.size(),0));
-            for(Map.Entry<String,Integer> srcHeader: headerMap.entrySet())
-                indexMappedProperty.set(srcHeader.getValue(),newDataHeaderMap.get(srcHeader.getKey()));
-            for(int i = 0;i<newData.size();i++){
+        if (newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())) {
+            List<Integer> indexMappedProperty = new ArrayList<>(Collections.nCopies(headerMap.size(), 0));
+            for (Map.Entry<String, Integer> srcHeader : headerMap.entrySet())
+                indexMappedProperty.set(srcHeader.getValue(), newDataHeaderMap.get(srcHeader.getKey()));
+            for (int i = 0; i < newData.size(); i++) {
                 RowUserData newRow = new RowUserData(newData.get(i).getValues(), indexMappedProperty);
                 userData.add(newRow);
             }
-        }
-        else throw new IllegalStateException("Не совпадающие заголовки в таблицах");
+        } else throw new IllegalStateException("Не совпадающие заголовки в таблицах");
     }
 
-    public List<String> getSortHeaders(){
-        List<String> result = new ArrayList<String>(Collections.nCopies(headerMap.size(),""));
-        for(Map.Entry<String,Integer> srcHeader: headerMap.entrySet())
-            result.set(srcHeader.getValue(),srcHeader.getKey());
+    public List<String> getSortHeaders() {
+        List<String> result = new ArrayList<String>(Collections.nCopies(headerMap.size(), ""));
+        for (Map.Entry<String, Integer> srcHeader : headerMap.entrySet())
+            result.set(srcHeader.getValue(), srcHeader.getKey());
         return result;
     }
 
-    public List<String> getColumnValues(String columnHeader){
+    public List<String> getColumnValues(String columnHeader) {
         List<String> result = new ArrayList<>();
         int columnIndex = headerMap.get(columnHeader);
-        for(RowUserData row : userData)
+        for (RowUserData row : userData)
             result.add(row.getCellValue(columnIndex));
         return result;
     }

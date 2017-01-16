@@ -9,38 +9,48 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.StatsSelectionController">
-   <items>
-      <AnchorPane fx:id="generateStats" prefHeight="339.0" prefWidth="243.0">
-         <children>
-            <TreeView fx:id="tree" editable="true" prefHeight="339.0" prefWidth="243.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35" />
-            <Label text="Выберите статистические величины" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10" />
-            <Button layoutX="122.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#getSelectedColumnNamesAndGenerateStats" text="Генерировать статистику" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-         </children>
-      </AnchorPane>
-      <FlowPane fx:id="generateChart" alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <children>
-            <Label text="Выберите нужные колонки таблицы для построения графика" wrapText="true">
-               <FlowPane.margin>
-                  <Insets bottom="10.0" />
-               </FlowPane.margin>
-            </Label>
-            <Label text="Ось OX" />
-            <ComboBox fx:id="OXAxisComboBox" prefHeight="25.0" prefWidth="202.0" />
-            <Label text="Ось OY" />
-            <ComboBox fx:id="OYAxisComboBox" prefHeight="25.0" prefWidth="202.0" />
-            <Button fx:id="createChartButton" onMouseClicked="#generateChart" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="204.0" text="Построить график" textAlignment="CENTER">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <FlowPane.margin>
-                  <Insets top="10.0" />
-               </FlowPane.margin>
-            </Button>
-         </children>
-      </FlowPane>
-   </items>
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.StatsSelectionController">
+    <items>
+        <AnchorPane fx:id="generateStats" prefHeight="339.0" prefWidth="243.0">
+            <children>
+                <TreeView fx:id="tree" editable="true" prefHeight="339.0" prefWidth="243.0"
+                          AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                          AnchorPane.topAnchor="35"/>
+                <Label text="Выберите статистические величины" AnchorPane.leftAnchor="50.0"
+                       AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10"/>
+                <Button layoutX="122.0" layoutY="359.0" mnemonicParsing="false"
+                        onMouseClicked="#getSelectedColumnNamesAndGenerateStats" text="Генерировать статистику"
+                        AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"/>
+            </children>
+        </AnchorPane>
+        <FlowPane fx:id="generateChart" alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL"
+                  prefHeight="200.0" prefWidth="200.0" rowValignment="TOP">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <children>
+                <Label text="Выберите нужные колонки таблицы для построения графика" wrapText="true">
+                    <FlowPane.margin>
+                        <Insets bottom="10.0"/>
+                    </FlowPane.margin>
+                </Label>
+                <Label text="Ось OX"/>
+                <ComboBox fx:id="OXAxisComboBox" prefHeight="25.0" prefWidth="202.0"/>
+                <Label text="Ось OY"/>
+                <ComboBox fx:id="OYAxisComboBox" prefHeight="25.0" prefWidth="202.0"/>
+                <Button fx:id="createChartButton" onMouseClicked="#generateChart" alignment="CENTER"
+                        contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="204.0"
+                        text="Построить график" textAlignment="CENTER">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <FlowPane.margin>
+                        <Insets top="10.0"/>
+                    </FlowPane.margin>
+                </Button>
+            </children>
+        </FlowPane>
+    </items>
 </SplitPane>

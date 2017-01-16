@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class CSVExporter implements Exporter {
     @Override
-    public void Export(File file,TableUserData table) throws IOException {
+    public void Export(File file, TableUserData table) throws IOException {
         FileWriter fileWriter = null;
         CSVPrinter csvWriter = null;
         try {
@@ -21,11 +21,10 @@ public class CSVExporter implements Exporter {
             csvWriter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT.withFirstRecordAsHeader());
             List<String> sortHeaders = table.getSortHeaders();
             csvWriter.printRecord(sortHeaders);
-            for (RowUserData row:table.getUserData()) {
+            for (RowUserData row : table.getUserData()) {
                 csvWriter.printRecord(row.getValues());
-           }
-        }
-        finally {
+            }
+        } finally {
             fileWriter.flush();
             fileWriter.close();
             csvWriter.close();

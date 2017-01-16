@@ -3,6 +3,7 @@ package Patterns;
 /**
  * Created by Елисеев on 08.01.2017.
  */
+
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -29,28 +30,28 @@ public class StatsSelectionController {
     private CheckBoxTreeItem<String> rootItem;
     private TableUserData table;
     private Statistics statistics = new Statistics();
-    private final Map<String, DoubleSupplier> checkboxContent = new HashMap<String, DoubleSupplier>(){{
-        put("Минимум",  statistics::getMin);
+    private final Map<String, DoubleSupplier> checkboxContent = new HashMap<String, DoubleSupplier>() {{
+        put("Минимум", statistics::getMin);
         put("Максимум", statistics::getMax);
-        put("Среднее",   statistics::getMean);
-        put("Стандартное отклонение",   statistics::getStandardDeviation);
-        put("Сумма",  statistics::getSum);
+        put("Среднее", statistics::getMean);
+        put("Стандартное отклонение", statistics::getStandardDeviation);
+        put("Сумма", statistics::getSum);
         put("Дисперсия", statistics::getVariance);
-        put("Коэф. ассиметрии",   statistics::getSkewness);
-        put("Коэф. эксцесса",   statistics::getKurtosis);
+        put("Коэф. ассиметрии", statistics::getSkewness);
+        put("Коэф. эксцесса", statistics::getKurtosis);
     }};
 
     @FXML
-    public void initialiseData(TableUserData table){
+    public void initialiseData(TableUserData table) {
         this.table = table;
         List<String> sortHeaders = table.getSortHeaders();
         generateCheckboxTreeView(sortHeaders);
-        for(String columnHeader : sortHeaders){
+        for (String columnHeader : sortHeaders) {
             OXAxisComboBox.getItems().add(columnHeader);
             OYAxisComboBox.getItems().add(columnHeader);
         }
         OXAxisComboBox.setValue(sortHeaders.get(0));
-        if(sortHeaders.size() > 1)
+        if (sortHeaders.size() > 1)
             OYAxisComboBox.setValue(sortHeaders.get(1));
         else
             OYAxisComboBox.setValue(sortHeaders.get(0));
@@ -58,16 +59,16 @@ public class StatsSelectionController {
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
-        rootItem =  new CheckBoxTreeItem<String>("Колонки");
+        rootItem = new CheckBoxTreeItem<String>("Колонки");
         rootItem.setExpanded(true);
         tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
 
-        for(String columnHeader : columnHeaders){
+        for (String columnHeader : columnHeaders) {
 
-            CheckBoxTreeItem<String> checkBoxTreeItem =  new CheckBoxTreeItem<String>(columnHeader);
+            CheckBoxTreeItem<String> checkBoxTreeItem = new CheckBoxTreeItem<String>(columnHeader);
             rootItem.getChildren().add(checkBoxTreeItem);
-            for(String nestedValue : checkboxContent.keySet()){
-                CheckBoxTreeItem<String> nestedCheckbox =  new CheckBoxTreeItem<String>(nestedValue);
+            for (String nestedValue : checkboxContent.keySet()) {
+                CheckBoxTreeItem<String> nestedCheckbox = new CheckBoxTreeItem<String>(nestedValue);
                 checkBoxTreeItem.getChildren().add(nestedCheckbox);
             }
         }
@@ -76,7 +77,7 @@ public class StatsSelectionController {
     }
 
     @FXML
-    private void getSelectedColumnNamesAndGenerateStats(){
+    private void getSelectedColumnNamesAndGenerateStats() {
         StringBuilder statsStringBuilder = new StringBuilder();
         try {
             for (TreeItem<String> child : rootItem.getChildren()) {
@@ -84,31 +85,29 @@ public class StatsSelectionController {
                 if (checkBoxTreeItem.isSelected() || checkBoxTreeItem.isIndeterminate()) {
                     List<String> values = table.getColumnValues(checkBoxTreeItem.getValue());
                     List<Double> doubleValues = new ArrayList<>();
-                    try{
+                    try {
                         for (String value : values)
                             doubleValues.add(Double.parseDouble(value));
-                    }
-                    catch (NumberFormatException exception){
+                    } catch (NumberFormatException exception) {
                         throw new IllegalArgumentException("Не цифровые значения в столбце " + checkBoxTreeItem.getValue());
                     }
                     statsStringBuilder.append(generateStatsForColumnValues(doubleValues, checkBoxTreeItem));
                 }
             }
             String stats = statsStringBuilder.toString();
-            if(!stats.isEmpty())
+            if (!stats.isEmpty())
                 new StatsAndCharsView(stats);
             else
-                new Alert(Alert.AlertType.INFORMATION,"Выберите хотя бы одну колонку").showAndWait();
-        }
-        catch (IllegalArgumentException exception) {
-            new Alert(Alert.AlertType.ERROR,exception.getMessage()).showAndWait();
+                new Alert(Alert.AlertType.INFORMATION, "Выберите хотя бы одну колонку").showAndWait();
+        } catch (IllegalArgumentException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage()).showAndWait();
         }
     }
 
-    private String generateStatsForColumnValues(List<Double> values,CheckBoxTreeItem<String> columnNameCheckBox){
+    private String generateStatsForColumnValues(List<Double> values, CheckBoxTreeItem<String> columnNameCheckBox) {
         statistics.setValues(values);
         StringBuilder statsStringBuilder = new StringBuilder();
-        for(TreeItem<String> child: columnNameCheckBox.getChildren()) {
+        for (TreeItem<String> child : columnNameCheckBox.getChildren()) {
             CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
             if (checkBoxTreeItem.isSelected()) {
                 statsStringBuilder.append(columnNameCheckBox.getValue());
@@ -121,16 +120,16 @@ public class StatsSelectionController {
         }
         return statsStringBuilder.toString();
     }
+
     @FXML
-    private void generateChart(){
-        if(OYAxisComboBox.getValue().equals(OXAxisComboBox.getValue()))
-            new Alert(Alert.AlertType.INFORMATION,"Выберите разные колонки для осей").showAndWait();
+    private void generateChart() {
+        if (OYAxisComboBox.getValue().equals(OXAxisComboBox.getValue()))
+            new Alert(Alert.AlertType.INFORMATION, "Выберите разные колонки для осей").showAndWait();
         else
-            try{
+            try {
                 new StatsAndCharsView(OXAxisComboBox.getValue(), OYAxisComboBox.getValue(), table);
-            }
-            catch(NumberFormatException exception){
-                new Alert(Alert.AlertType.INFORMATION,"Встретилось нечисловое значение в одной из колонок").showAndWait();
+            } catch (NumberFormatException exception) {
+                new Alert(Alert.AlertType.INFORMATION, "Встретилось нечисловое значение в одной из колонок").showAndWait();
             }
     }
 }

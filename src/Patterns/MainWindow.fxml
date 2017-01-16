@@ -4,12 +4,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="467.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.MainWindowController">
-   <children>
-      <TableView fx:id="tableView" editable="true" layoutX="143.0" layoutY="14.0" prefHeight="426.0" prefWidth="336.0" AnchorPane.bottomAnchor="30" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10" />
-      <Button fx:id="createNewTableButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#createNewTable" prefHeight="67.0" prefWidth="116.0" text="Открыть новый файл" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="addDataFromFileToTableButton" disable="true" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onMouseClicked="#addInfoFromFile" prefHeight="67.0" prefWidth="116.0" text="Добавить данные из другого файла" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="exportTableButton" disable="true" layoutX="14.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#exportTableToFile" prefHeight="67.0" prefWidth="116.0" text="Экспорт таблицы в файл" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="statsDialogOpenButton" disable="true" layoutX="14.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#statsDialogOpen" prefHeight="67.0" prefWidth="116.0" text="Генерировать статистику" textAlignment="CENTER" wrapText="true" />
-   </children>
+<AnchorPane prefHeight="467.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Patterns.MainWindowController">
+    <children>
+        <TableView fx:id="tableView" editable="true" layoutX="143.0" layoutY="14.0" prefHeight="426.0" prefWidth="336.0"
+                   AnchorPane.bottomAnchor="30" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="10.0"
+                   AnchorPane.topAnchor="10"/>
+        <Button fx:id="createNewTableButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+                onMouseClicked="#createNewTable" prefHeight="67.0" prefWidth="116.0" text="Открыть новый файл"
+                textAlignment="CENTER" wrapText="true"/>
+        <Button fx:id="addDataFromFileToTableButton" disable="true" layoutX="14.0" layoutY="98.0"
+                mnemonicParsing="false" onMouseClicked="#addInfoFromFile" prefHeight="67.0" prefWidth="116.0"
+                text="Добавить данные из другого файла" textAlignment="CENTER" wrapText="true"/>
+        <Button fx:id="exportTableButton" disable="true" layoutX="14.0" layoutY="182.0" mnemonicParsing="false"
+                onMouseClicked="#exportTableToFile" prefHeight="67.0" prefWidth="116.0" text="Экспорт таблицы в файл"
+                textAlignment="CENTER" wrapText="true"/>
+        <Button fx:id="statsDialogOpenButton" disable="true" layoutX="14.0" layoutY="262.0" mnemonicParsing="false"
+                onMouseClicked="#statsDialogOpen" prefHeight="67.0" prefWidth="116.0" text="Генерировать статистику"
+                textAlignment="CENTER" wrapText="true"/>
+    </children>
 </AnchorPane>

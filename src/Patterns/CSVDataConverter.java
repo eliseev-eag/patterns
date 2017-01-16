@@ -12,22 +12,22 @@ import java.util.*;
  */
 public class CSVDataConverter implements InputDataConverter {
     @Override
-        public TableUserData Convert(File file) throws IOException {
+    public TableUserData Convert(File file) throws IOException {
 
         Reader in = new FileReader(file);
         CSVParser records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
         final Map<String, Integer> headerMap = records.getHeaderMap();
 
-        List< RowUserData> userData = new ArrayList<>(headerMap.size());
+        List<RowUserData> userData = new ArrayList<>(headerMap.size());
 
         for (CSVRecord record : records) {
             String[] row = new String[headerMap.size()];
-            for (int i =0;i<headerMap.size();i++){
-                  row[i] = record.get(i);
+            for (int i = 0; i < headerMap.size(); i++) {
+                row[i] = record.get(i);
             }
             userData.add(new RowUserData(Arrays.asList(row)));
         }
-        return new TableUserData(headerMap,userData);
+        return new TableUserData(headerMap, userData);
     }
 
 }
