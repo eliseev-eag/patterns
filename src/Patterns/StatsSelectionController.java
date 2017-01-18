@@ -55,7 +55,7 @@ public class StatsSelectionController {
             OYAxisComboBox.setValue(sortHeaders.get(1));
         else
             OYAxisComboBox.setValue(sortHeaders.get(0));
-        createChartButton.setDisable(table.size() < 2);
+        createChartButton.setDisable(table.size() < 2 || table.isDuplicateHeadersExist());
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
@@ -83,7 +83,8 @@ public class StatsSelectionController {
             for (TreeItem<String> child : rootItem.getChildren()) {
                 CheckBoxTreeItem<String> checkBoxTreeItem = (CheckBoxTreeItem<String>) child;
                 if (checkBoxTreeItem.isSelected() || checkBoxTreeItem.isIndeterminate()) {
-                    List<String> values = table.getColumnValues(checkBoxTreeItem.getValue());
+                    int columnIndex = rootItem.getChildren().indexOf(checkBoxTreeItem);
+                    List<String> values = table.getColumnValues(columnIndex);
                     List<Double> doubleValues = new ArrayList<>();
                     try {
                         for (String value : values)

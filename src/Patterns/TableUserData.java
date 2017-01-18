@@ -32,35 +32,28 @@ public class TableUserData {
         return userData.size();
     }
 
-    public void addData(TableUserData newData) {
+    public void addData(TableUserData newTable) {
 
-        List<String> newHeaders = newData.getHeaders();
+        List<String> newHeaders = newTable.getHeaders();
         List<String> headers = this.getHeaders();
-        if(isDuplicateHeadersExist(headers) || isDuplicateHeadersExist(newHeaders))
-            throw new IllegalStateException("В существующей таблице содержатся дублирующие заголовки. Слияние невозможно");
+        MergeDataStrategy mergeStrategy;
         if (newHeaders.containsAll(headers)) {
-            int headersSize = headers.size();
-            List<Integer> indexMappedProperty = new ArrayList<>();
-            for (int i = 0; i < headersSize; i++) {
-                int newIndex = newHeaders.indexOf(headers.get(i));
-                indexMappedProperty.add(newIndex);
-            }
-            for (int i = 0; i < newData.size(); i++) {
-                RowUserData newRow = new RowUserData(newData.get(i).getValues(), indexMappedProperty);
-                userData.add(newRow);
-            }
+            if (this.isDuplicateHeadersExist() || newTable.isDuplicateHeadersExist())
+                mergeStrategy = new DuplicateMerge();
+            else
+                mergeStrategy = new NonDuplicateMerge();
+            mergeStrategy.merge(this,newTable);
         } else throw new IllegalStateException("Не совпадающие заголовки в таблицах");
     }
 
-    public List<String> getColumnValues(String columnHeader) {
+    public List<String> getColumnValues(int columnIndex) {
         List<String> result = new ArrayList<>();
-        int columnIndex = getHeaders().indexOf(columnHeader);
         for (RowUserData row : userData)
             result.add(row.getCellValue(columnIndex));
         return result;
     }
 
-    private boolean isDuplicateHeadersExist(List<String> headers){
+    public boolean isDuplicateHeadersExist() {
         Set<String> headersSet = new HashSet<String>(headers);
         return headersSet.size() < headers.size();
     }
