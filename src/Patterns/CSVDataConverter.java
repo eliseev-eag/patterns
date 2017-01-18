@@ -15,9 +15,14 @@ public class CSVDataConverter implements InputDataConverter {
     public TableUserData Convert(File file) throws IOException {
 
         Reader in = new FileReader(file);
-        CSVParser records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
-        final Map<String, Integer> headerMap = records.getHeaderMap();
-
+        CSVParser parser = CSVFormat.EXCEL.parse(in);
+        final Map<String, Integer> headerMap = new HashMap<>();
+        List<CSVRecord> records = parser.getRecords();
+        CSVRecord header = records.get(0);
+        for (int i = 0; i < header.size(); i++) {
+            headerMap.put(header.get(i),i);
+        }
+        records.remove(0);
         List<RowUserData> userData = new ArrayList<>(headerMap.size());
 
         for (CSVRecord record : records) {

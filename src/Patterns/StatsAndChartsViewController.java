@@ -36,7 +36,7 @@ public class StatsAndChartsViewController {
             lineChart.setScaleX(lineChart.getScaleX() * scaleFactor);
             lineChart.setScaleY(lineChart.getScaleY() * scaleFactor);
         });
-        
+
         class Delta {
             double x, y;
         }

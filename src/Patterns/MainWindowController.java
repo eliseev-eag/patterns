@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class MainWindowController {
@@ -103,12 +104,13 @@ public class MainWindowController {
         tableView.editableProperty().set(true);
         tableUserDataWrapper = new TableUserDataWrapper(userData);
 
-        Map<String, Integer> headerMap = tableUserDataWrapper.getHeaderMap();
-
-        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
-            String key = entry.getKey();
-            TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(key);
-            column.setCellValueFactory(param -> (param.getValue().getProperty(entry.getValue())));
+        List<String> sortHeaders = tableUserDataWrapper.getUserData().getSortHeaders();
+        for(int columnIndex=0;columnIndex<sortHeaders.size();columnIndex++)
+        {
+            String columnHeader = sortHeaders.get(columnIndex);
+            TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(columnHeader);
+            int finalColumnIndex = columnIndex;
+            column.setCellValueFactory(param -> (param.getValue().getProperty(finalColumnIndex)));
             column.setCellFactory(TextFieldTableCell.forTableColumn());
 
             column.setOnEditCommit(event -> onEditCommitSelectedTableCommit(event));
