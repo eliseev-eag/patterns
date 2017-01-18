@@ -44,7 +44,7 @@ public class StatsSelectionController {
     @FXML
     public void initialiseData(TableUserData table) {
         this.table = table;
-        List<String> sortHeaders = table.getSortHeaders();
+        List<String> sortHeaders = table.getHeaders();
         generateCheckboxTreeView(sortHeaders);
         for (String columnHeader : sortHeaders) {
             OXAxisComboBox.getItems().add(columnHeader);

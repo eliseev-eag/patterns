@@ -18,8 +18,8 @@ public class CSVExporter implements Exporter {
         CSVPrinter csvWriter = null;
         try {
             fileWriter = new FileWriter(file);
-            csvWriter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT.withFirstRecordAsHeader());
-            List<String> sortHeaders = table.getSortHeaders();
+            csvWriter = new CSVPrinter(fileWriter, CSVFormat.EXCEL.withFirstRecordAsHeader());
+            List<String> sortHeaders = table.getHeaders();
             csvWriter.printRecord(sortHeaders);
             for (RowUserData row : table.getUserData()) {
                 csvWriter.printRecord(row.getValues());

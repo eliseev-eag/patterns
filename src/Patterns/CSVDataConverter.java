@@ -16,23 +16,16 @@ public class CSVDataConverter implements InputDataConverter {
 
         Reader in = new FileReader(file);
         CSVParser parser = CSVFormat.EXCEL.parse(in);
-        final Map<String, Integer> headerMap = new HashMap<>();
-        List<CSVRecord> records = parser.getRecords();
-        CSVRecord header = records.get(0);
-        for (int i = 0; i < header.size(); i++) {
-            headerMap.put(header.get(i),i);
-        }
-        records.remove(0);
-        List<RowUserData> userData = new ArrayList<>(headerMap.size());
+        List<RowUserData> userData = new ArrayList<>();
 
-        for (CSVRecord record : records) {
+        for (CSVRecord record : parser) {
             String[] row = new String[record.size()];
             for (int i = 0; i < record.size(); i++) {
                 row[i] = record.get(i);
             }
             userData.add(new RowUserData(Arrays.asList(row)));
         }
-        return new TableUserData(headerMap, userData);
+        return new TableUserData(userData);
     }
 
 }

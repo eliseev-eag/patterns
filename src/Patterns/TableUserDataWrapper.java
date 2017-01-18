@@ -3,6 +3,7 @@ package Patterns;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +32,8 @@ public class TableUserDataWrapper {
         return observableTable;
     }
 
-    public Map<String, Integer> getHeaderMap() {
-        return nativeTable.getHeaderMap();
+    public List<String> getHeaders() {
+        return nativeTable.getHeaders();
     }
 
     public TableUserData getUserData() {

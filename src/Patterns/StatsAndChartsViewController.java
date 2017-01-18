@@ -69,8 +69,8 @@ public class StatsAndChartsViewController {
         final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         XYChart.Series<Number, Number> series = new XYChart.Series();
         series.setName("Зависимость " + oxAxis + " от " + oyAxis);
-        int oxIndex = table.getHeaderMap().get(oxAxis);
-        int oyIndex = table.getHeaderMap().get(oyAxis);
+        int oxIndex = table.getHeaders().indexOf(oxAxis);
+        int oyIndex = table.getHeaders().indexOf(oyAxis);
         for (RowUserData row : table.getUserData())
             series.getData().add(new XYChart.Data<>(Double.parseDouble(row.getCellValue(oxIndex)), Double.parseDouble(row.getCellValue(oyIndex))));
         lineChart.getData().add(series);

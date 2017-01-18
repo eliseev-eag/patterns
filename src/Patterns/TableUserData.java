@@ -10,20 +10,22 @@ import java.util.Map;
  */
 public class TableUserData {
 
-    private final Map<String, Integer> headerMap;
     private List<RowUserData> userData;
+    private List<String> headers;
 
-    public TableUserData(Map<String, Integer> headerMap, List<RowUserData> userData) {
-        this.headerMap = headerMap;
+    public TableUserData(List<RowUserData> userData) {
+        headers = userData.get(0).getValues();
+        userData.remove(0);
         this.userData = userData;
-    }
 
-    public Map<String, Integer> getHeaderMap() {
-        return headerMap;
     }
 
     public List<RowUserData> getUserData() {
         return userData;
+    }
+
+    public List<String> getHeaders() {
+        return headers;
     }
 
     public RowUserData get(int index) {
@@ -35,11 +37,15 @@ public class TableUserData {
     }
 
     public void addData(TableUserData newData) {
-        Map<String, Integer> newDataHeaderMap = newData.getHeaderMap();
-        if (newDataHeaderMap.keySet().containsAll(this.headerMap.keySet())) {
-            List<Integer> indexMappedProperty = new ArrayList<>(Collections.nCopies(headerMap.size(), 0));
-            for (Map.Entry<String, Integer> srcHeader : headerMap.entrySet())
-                indexMappedProperty.set(srcHeader.getValue(), newDataHeaderMap.get(srcHeader.getKey()));
+        List<String> newHeaders = newData.getHeaders();
+        List<String> headers = this.getHeaders();
+        if (newHeaders.containsAll(headers)) {
+            int headersSize = headers.size();
+            List<Integer> indexMappedProperty = new ArrayList<>();
+            for (int i = 0; i < headersSize; i++) {
+                int newIndex = newHeaders.indexOf(headers.get(i));
+                indexMappedProperty.add(newIndex);
+            }
             for (int i = 0; i < newData.size(); i++) {
                 RowUserData newRow = new RowUserData(newData.get(i).getValues(), indexMappedProperty);
                 userData.add(newRow);
@@ -47,16 +53,9 @@ public class TableUserData {
         } else throw new IllegalStateException("Не совпадающие заголовки в таблицах");
     }
 
-    public List<String> getSortHeaders() {
-        List<String> result = new ArrayList<String>(Collections.nCopies(headerMap.size(), ""));
-        for (Map.Entry<String, Integer> srcHeader : headerMap.entrySet())
-            result.set(srcHeader.getValue(), srcHeader.getKey());
-        return result;
-    }
-
     public List<String> getColumnValues(String columnHeader) {
         List<String> result = new ArrayList<>();
-        int columnIndex = headerMap.get(columnHeader);
+        int columnIndex = getHeaders().indexOf(columnHeader);
         for (RowUserData row : userData)
             result.add(row.getCellValue(columnIndex));
         return result;

@@ -104,9 +104,8 @@ public class MainWindowController {
         tableView.editableProperty().set(true);
         tableUserDataWrapper = new TableUserDataWrapper(userData);
 
-        List<String> sortHeaders = tableUserDataWrapper.getUserData().getSortHeaders();
-        for(int columnIndex=0;columnIndex<sortHeaders.size();columnIndex++)
-        {
+        List<String> sortHeaders = tableUserDataWrapper.getHeaders();
+        for (int columnIndex = 0; columnIndex < sortHeaders.size(); columnIndex++) {
             String columnHeader = sortHeaders.get(columnIndex);
             TableColumn<RowUserDataWrapper, String> column = new TableColumn<>(columnHeader);
             int finalColumnIndex = columnIndex;
