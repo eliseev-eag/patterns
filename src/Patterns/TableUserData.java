@@ -1,9 +1,6 @@
 package Patterns;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Елисеев on 05.01.2017.
@@ -17,7 +14,6 @@ public class TableUserData {
         headers = userData.get(0).getValues();
         userData.remove(0);
         this.userData = userData;
-
     }
 
     public List<RowUserData> getUserData() {
@@ -37,8 +33,11 @@ public class TableUserData {
     }
 
     public void addData(TableUserData newData) {
+
         List<String> newHeaders = newData.getHeaders();
         List<String> headers = this.getHeaders();
+        if(isDuplicateHeadersExist(headers) || isDuplicateHeadersExist(newHeaders))
+            throw new IllegalStateException("В существующей таблице содержатся дублирующие заголовки. Слияние невозможно");
         if (newHeaders.containsAll(headers)) {
             int headersSize = headers.size();
             List<Integer> indexMappedProperty = new ArrayList<>();
@@ -59,5 +58,10 @@ public class TableUserData {
         for (RowUserData row : userData)
             result.add(row.getCellValue(columnIndex));
         return result;
+    }
+
+    private boolean isDuplicateHeadersExist(List<String> headers){
+        Set<String> headersSet = new HashSet<String>(headers);
+        return headersSet.size() < headers.size();
     }
 }
