@@ -21,8 +21,8 @@ public class CSVDataConverter implements InputDataConverter {
         List<RowUserData> userData = new ArrayList<>(headerMap.size());
 
         for (CSVRecord record : records) {
-            String[] row = new String[headerMap.size()];
-            for (int i = 0; i < headerMap.size(); i++) {
+            String[] row = new String[record.size()];
+            for (int i = 0; i < record.size(); i++) {
                 row[i] = record.get(i);
             }
             userData.add(new RowUserData(Arrays.asList(row)));
