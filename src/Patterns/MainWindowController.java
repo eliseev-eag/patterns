@@ -48,7 +48,7 @@ public class MainWindowController {
             InputDataConverter converter = InputDataFlyweight.getInstance().getInputConverter(file);
             TableUserData userData = converter.Convert(file);
             try {
-                addParsedInfo(userData);
+                tableUserDataWrapper.addData(userData);
             } catch (IllegalStateException exception) {
                 new Alert(Alert.AlertType.ERROR, exception.getMessage()).showAndWait();
             }
@@ -64,10 +64,6 @@ public class MainWindowController {
                     statsDialogOpenButton.setDisable(tableView.getColumns().isEmpty());
                     exportTableButton.setDisable(tableView.getColumns().isEmpty());
                 });
-    }
-
-    private void addParsedInfo(TableUserData userData) {
-        tableUserDataWrapper.addData(userData);
     }
 
     private File saveFileDialog() {
