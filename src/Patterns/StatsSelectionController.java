@@ -55,7 +55,7 @@ public class StatsSelectionController {
             OYAxisComboBox.setValue(sortHeaders.get(1));
         else
             OYAxisComboBox.setValue(sortHeaders.get(0));
-        createChartButton.setDisable(table.size() < 2 || table.isDuplicateHeadersExist());
+        createChartButton.setDisable(table.getHeaders().size() < 2 || table.isDuplicateHeadersExist());
     }
 
     private void generateCheckboxTreeView(List<String> columnHeaders) {
